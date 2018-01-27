@@ -7,9 +7,9 @@ _json=`cat config/release.json`
 # リポジトリ名を取得する
 _repositories=`echo ${_json} | jq --compact-output ".repository"`
 _repositories=`echo ${_repositories} \
-    | sed -e "s/,/ /g" \
-    | sed -e s/\"//g \
-    | sed -e "s/^\[//" | sed -e "s/\]$//"`
+    | sed -e 's;,; ;g' \
+    | sed -e 's;\";;g' \
+    | sed -e 's;^\[;;' | sed -e 's;\]$;;'`
 for _repository in ${_repositories}
 do
     if [ "${_repository}" != "testtest" -a "${_repository}" != "testtest2" ]; then
@@ -20,7 +20,7 @@ done
 
 # ブランチ名を取得する
 _branch=`echo ${_json} | jq ".branch"`
-_branch=`echo ${_branch} | sed -e s/\"//g`
+_branch=`echo ${_branch} | sed -e 's;\";;g'`
 
 rm -fr /tmp/aaa
 mkdir /tmp/aaa
