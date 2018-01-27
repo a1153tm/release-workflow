@@ -1,4 +1,4 @@
 {
-    "repository": "testtest",
-    "branch": "release/7.0.0"
+    "repository": ["testtest", "testtest2"],
+    "branch": "release/8.0.0"
 }

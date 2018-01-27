@@ -4,7 +4,7 @@ set -e
 
 _repositories=`cat config/release.json | jq --compact-output ".repository"`
 echo ${_repositories}
-_repositories=`echo $_repositories | sed -e "s/,/ /g" | sed -e s/\"//g`
+_repositories=`echo $_repositories | sed -e "s/,/ /g" | sed -e s/\"//g | sed -e "s/^\[//" |  sed -e "s/\]$//"`
 echo ${_repositories}
 for _repository in ${_repositories}
 do
