@@ -25,18 +25,23 @@ mkdir /tmp/aaa
 cd /tmp/aaa
 
 _tag=${DRONE_COMMIT_BRANCH}
+_base_dir=`pwd`
 for _repository in ${_repositories}
 do
   _repository_url=https://github.com/a1153tm/${_repository}.git
+  cd ${_base_dir}
   git clone ${_repository_url}
   cd ${_repository}
   set +e
   git tag -d ${_tag}_prev
   if [ $? -eq 0 ]; then
+    set -e
     git push origin :${_tag}_prev
   fi
+  set -e
   git tag ${_tag}_prev ${_tag}
   if [ $? -eq 0 ]; then
+    set -e
     git push origin ${_tag}_prev
     git tag -d ${_tag}
     git push origin :${_tag}
