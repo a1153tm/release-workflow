@@ -2,10 +2,12 @@
 set -x
 set -e
 
-_repositories=`cat config/release.json | jq --compact-output ".repository"`
-echo ${_repositories}
-_repositories=`echo $_repositories | sed -e "s/,/ /g" | sed -e s/\"//g | sed -e "s/^\[//" |  sed -e "s/\]$//"`
-echo ${_repositories}
+_repositories=`cat config/release.json`
+_repositories=`echo ${_repositories} | jq --compact-output ".repository"`
+_repositories=`echo ${_repositories} \
+    | sed -e "s/,/ /g" \
+    | sed -e s/\"//g \
+    | sed -e "s/^\[//" | sed -e "s/\]$//"`
 for _repository in ${_repositories}
 do
     if [ "${_repository}" != "testtest" -a "${_repository}" != "testtest2" ]; then
@@ -14,11 +16,12 @@ do
     fi
 done
 
+_branch=`cat config/release.json`
+_branch=`echo ${_branch} | jq ".branch"`
+_branch=`echo ${_branch} | sed -e s/\"//g`
+
 rm -fr /tmp/aaa
 mkdir /tmp/aaa
-
-_branch=`cat config/release.json | jq ".branch" | sed -e s/\"//g`
-
 cd /tmp/aaa
 
 _tag=${DRONE_COMMIT_BRANCH}
