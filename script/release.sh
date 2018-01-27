@@ -34,7 +34,7 @@ do
   _repository_url=https://github.com/a1153tm/${_repository}.git
   cd ${_base_dir} && git clone ${_repository_url} && cd ${_repository}
   git checkout ${_branch}
-  _commit=`git log -1 | head -1 | cut -f2 -d " "`
+  _commit=`git log | head -1 | awk '{print $2}'`
   _s3_url=s3://backet/${_repository}/${_commit}.jar
   echo $_s3_url
 done
